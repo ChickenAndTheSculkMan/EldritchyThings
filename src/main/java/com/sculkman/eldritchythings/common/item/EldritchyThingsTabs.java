@@ -14,6 +14,7 @@ public class EldritchyThingsTabs {
             .withTabsBefore(CreativeModeTabs.COMBAT)
             .icon(() -> EldritchyThingsItems.EXAMPLE_ITEM.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
+                //Add ITEMS. here, do not add actual blocks!
                 output.accept(EldritchyThingsItems.EXAMPLE_ITEM.get());
                 output.accept(EldritchyThingsBlocks.EXAMPLE_BLOCK_ITEM.get());
             }).build());
