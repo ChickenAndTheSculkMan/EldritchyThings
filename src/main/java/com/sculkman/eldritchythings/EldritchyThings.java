@@ -1,10 +1,13 @@
 package com.sculkman.eldritchythings;
 
 import com.mojang.logging.LogUtils;
+import com.sculkman.eldritchythings.client.entity.DevotedRenderer;
 import com.sculkman.eldritchythings.common.blocks.EldritchyThingsBlocks;
+import com.sculkman.eldritchythings.common.entity.EldritchyThingsEntities;
 import com.sculkman.eldritchythings.common.item.EldritchyThingsItems;
 import com.sculkman.eldritchythings.common.item.EldritchyThingsTabs;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
@@ -50,10 +53,11 @@ public class EldritchyThings
         //I hate Configs
 
         modEventBus.addListener(this::commonSetup);
-        EldritchyThingsBlocks.BLOCKS.register(modEventBus);
-        EldritchyThingsItems.ITEMS.register(modEventBus);
-        EldritchyThingsTabs.CREATIVE_MODE_TABS.register(modEventBus);
+        //EldritchyThingsBlocks.BLOCKS.register(modEventBus);
+        //EldritchyThingsItems.ITEMS.register(modEventBus);
+        //EldritchyThingsTabs.CREATIVE_MODE_TABS.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
+        EldritchyThingsEntities.ENTITIES.register(modEventBus);
         //modEventBus.addListener(this::addCreative);
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
@@ -79,17 +83,12 @@ public class EldritchyThings
     //    // Do something when the server starts
     //    LOGGER.info("HELLO from server starting");
     //}
-    //
-    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    //@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    //public static class ClientModEvents
-    //{
-    //    @SubscribeEvent
-    //    public static void onClientSetup(FMLClientSetupEvent event)
-    //    {
-    //        // Some client setup code
-    //        LOGGER.info("HELLO FROM CLIENT SETUP");
-    //        LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
-    //    }
-    //}
+    @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    public static class ClientEldritchyThingsEvents {
+        @SubscribeEvent
+        public static void onClientSetup(FMLClientSetupEvent event) {
+            EntityRenderers.register(EldritchyThingsEntities.DEVOTED.get(), DevotedRenderer::new);
+        }
+    }
+
 }
