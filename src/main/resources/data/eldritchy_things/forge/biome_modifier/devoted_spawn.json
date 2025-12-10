@@ -1,0 +1,11 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#minecraft:has_structure/woodland_mansion",
+  "spawners":
+  {
+    "type": "eldritchy_things:devoted",
+    "weight": 15,
+    "minCount": 1,
+    "maxCount": 1
+  }
+}

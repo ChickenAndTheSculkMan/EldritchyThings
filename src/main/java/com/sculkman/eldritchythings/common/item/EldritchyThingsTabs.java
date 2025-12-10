@@ -10,12 +10,11 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class EldritchyThingsTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, EldritchyThings.MODID);
-    public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
+    public static final RegistryObject<CreativeModeTab> ELDRITCHY_THINGS = CREATIVE_MODE_TABS.register("eldritchy_things", () -> CreativeModeTab.builder()
             .withTabsBefore(CreativeModeTabs.COMBAT)
-            .icon(() -> EldritchyThingsItems.EXAMPLE_ITEM.get().getDefaultInstance())
+            .icon(() -> EldritchyThingsItems.YELLOW_DAGGER.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 //Add ITEMS. here, do not add actual blocks!
-                output.accept(EldritchyThingsItems.EXAMPLE_ITEM.get());
-                output.accept(EldritchyThingsBlocks.EXAMPLE_BLOCK_ITEM.get());
+                output.accept(EldritchyThingsItems.YELLOW_DAGGER.get());
             }).build());
 }
