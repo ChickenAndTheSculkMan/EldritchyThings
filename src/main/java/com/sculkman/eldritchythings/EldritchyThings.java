@@ -83,6 +83,8 @@ public class EldritchyThings
     {
         if (event.getTabKey() == CreativeModeTabs.COMBAT)
             event.accept(EldritchyThingsItems.YELLOW_DAGGER);
+        if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS)
+            event.accept(EldritchyThingsItems.DEVOTED_SPAWN_EGG);
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
