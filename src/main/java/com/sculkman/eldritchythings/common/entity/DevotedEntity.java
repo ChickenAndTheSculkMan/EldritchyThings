@@ -1,5 +1,6 @@
 package com.sculkman.eldritchythings.common.entity;
 
+import com.sculkman.eldritchythings.common.effect.EldritchyThingsEffects;
 import com.sculkman.eldritchythings.common.item.EldritchyThingsItems;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -7,6 +8,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -82,13 +84,10 @@ public class DevotedEntity extends AbstractIllager {
         protected void checkAndPerformAttack(LivingEntity pEnemy, double pDistToEnemySqr) {
             double d0 = this.getAttackReachSqr(pEnemy);
             if (pDistToEnemySqr <= d0 && this.ticksUntilNextAttack <= 0) {
-                if (pEnemy instanceof Villager) {
-                    ((Villager) pEnemy).convertTo(EldritchyThingsEntities.DEVOTED.get(), false);
-                } else {
+                    pEnemy.addEffect(new MobEffectInstance(EldritchyThingsEffects.MADNESS.get(), 200, 0));
                     this.resetAttackCooldown();
                     this.mob.swing(InteractionHand.MAIN_HAND);
                     this.mob.doHurtTarget(pEnemy);
-                }
             }
         }
     }

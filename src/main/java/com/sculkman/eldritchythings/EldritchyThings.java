@@ -3,6 +3,7 @@ package com.sculkman.eldritchythings;
 import com.mojang.logging.LogUtils;
 import com.sculkman.eldritchythings.client.entity.DevotedRenderer;
 import com.sculkman.eldritchythings.common.blocks.EldritchyThingsBlocks;
+import com.sculkman.eldritchythings.common.effect.EldritchyThingsEffects;
 import com.sculkman.eldritchythings.common.entity.DevotedEntity;
 import com.sculkman.eldritchythings.common.entity.EldritchyThingsEntities;
 import com.sculkman.eldritchythings.common.item.EldritchyThingsItems;
@@ -70,6 +71,7 @@ public class EldritchyThings
         MinecraftForge.EVENT_BUS.register(this);
         EldritchyThingsEntities.ENTITIES.register(modEventBus);
         modEventBus.addListener(this::addCreative);
+        EldritchyThingsEffects.EFFECT.register(modEventBus);
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         context.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
