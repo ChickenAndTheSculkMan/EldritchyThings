@@ -16,4 +16,7 @@ public class EldritchyThingsEntities {
     public static final RegistryObject<EntityType<DevotedEntity>> DEVOTED =
             ENTITIES.register("devoted", () -> EntityType.Builder.of(DevotedEntity::new, MobCategory.MONSTER)
                     .sized(0.7f, 1.9f).build("devoted"));
+    public static final RegistryObject<EntityType<StarVampireEntity>> STAR_VAMPIRE =
+            ENTITIES.register("star_vampire", () -> EntityType.Builder.of(StarVampireEntity::new, MobCategory.MONSTER)
+                    .sized(3f, 3f).build("star_vampire"));
 }

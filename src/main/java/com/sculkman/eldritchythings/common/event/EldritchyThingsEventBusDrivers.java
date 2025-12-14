@@ -3,6 +3,7 @@ package com.sculkman.eldritchythings.common.event;
 import com.sculkman.eldritchythings.EldritchyThings;
 import com.sculkman.eldritchythings.common.entity.DevotedEntity;
 import com.sculkman.eldritchythings.common.entity.EldritchyThingsEntities;
+import com.sculkman.eldritchythings.common.entity.StarVampireEntity;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -16,6 +17,7 @@ public class EldritchyThingsEventBusDrivers {
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(EldritchyThingsEntities.DEVOTED.get(), DevotedEntity.createDevotedAttributes());
+        event.put(EldritchyThingsEntities.STAR_VAMPIRE.get(), StarVampireEntity.createStarVampireAttributes());
     }
 
     @SubscribeEvent
