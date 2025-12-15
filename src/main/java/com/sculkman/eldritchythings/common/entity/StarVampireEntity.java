@@ -1,5 +1,9 @@
 package com.sculkman.eldritchythings.common.entity;
 
+import com.sculkman.eldritchythings.common.entity.goals.StarVampireAttackGoal;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -25,6 +29,7 @@ public class StarVampireEntity extends Monster {
     }
     public static int StarVampireMenaceGauge = 0;
     public static int StarVampireBloodCounter = 0;
+    public int StarVampireBloodHunger = 100;
     public static enum StarVampireBehaviour {
         IDLE,
         FLEEING,
@@ -33,8 +38,12 @@ public class StarVampireEntity extends Monster {
         HUNTING_PLAYER,
         ASCENDING
     }
+    private static final EntityDataAccessor<Boolean> ATTACKING =
+            SynchedEntityData.defineId(StarVampireEntity.class, EntityDataSerializers.BOOLEAN);
     public final AnimationState idle = new AnimationState();
     private int idleAnimationTimeout = 0;
+    public final AnimationState attack = new AnimationState();
+    public int attackAnimationTimeout = 0;
 
     private void setupAnimationStates() {
         if (this.idleAnimationTimeout <=0) {
@@ -43,14 +52,26 @@ public class StarVampireEntity extends Monster {
         } else {
             --this.idleAnimationTimeout;
         }
+
+        if (this.isAttacking() && attackAnimationTimeout <=0) {
+            attackAnimationTimeout = 15;
+            attack.start(this.tickCount);
+        } else {
+            --this.attackAnimationTimeout;
+        }
+        if (!this.isAttacking()) {
+            attack.stop();
+        }
     }
 
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(8, new RandomStrollGoal(this, 0.6));
+        this.targetSelector.addGoal(1, new StarVampireAttackGoal(this, 1.0D, true));
+        this.goalSelector.addGoal(4, new RandomStrollGoal(this, 1.0));
         this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 3.0F, 1.0F));
         this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0F));
+        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
     }
 
     @Override
@@ -59,6 +80,20 @@ public class StarVampireEntity extends Monster {
         if (this.level().isClientSide) {
             setupAnimationStates();
         }
+    }
+
+    public void setAttacking(boolean attacking) {
+        this.entityData.set(ATTACKING, attacking);
+    }
+
+    public boolean isAttacking() {
+        return this.entityData.get(ATTACKING);
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(ATTACKING, false);
     }
 
     @Override

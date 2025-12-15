@@ -218,8 +218,9 @@ public class StarVampireModel<T extends Entity> extends HierarchicalModel<T> {
 		this.root.getAllParts().forEach(ModelPart::resetPose);
 		this.applyHeadRotation(netHeadYaw, headPitch, ageInTicks);
 
-		this.animateWalk(StarVampireAnim.walk, limbSwing, limbSwingAmount, 2f, 2.5f);
+		this.animateWalk(StarVampireAnim.walk, limbSwing, limbSwingAmount, 1f, 2.5f);
 		this.animate(((StarVampireEntity) entity).idle, StarVampireAnim.idle, ageInTicks, 1f);
+		this.animate(((StarVampireEntity) entity).attack, StarVampireAnim.attack, ageInTicks, 1f);
 	}
 	//Thank you kauepenjoe
 	private void applyHeadRotation(float pNetHeadYaw, float pHeadPitch, float pAgeInTicks) {
