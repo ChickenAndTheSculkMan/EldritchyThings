@@ -23,12 +23,11 @@ public class StarVampireAttackGoal extends MeleeAttackGoal {
         attackdelay = 7;
     }
 
-    //Thank you big kaupenjoe in the sky, i am not writing allat again
+    //Kaupenjoe walked so that i can walk
     @Override
     protected void checkAndPerformAttack(LivingEntity pEnemy, double pDistToEnemySqr) {
         if (isEnemyWithinAttackDistance(pEnemy, pDistToEnemySqr)) {
             shouldCountUntilNextAttack = true;
-
             if(isTimeToStartAttackAnimation()) {
                 entity.setAttacking(true);
             }
@@ -38,6 +37,8 @@ public class StarVampireAttackGoal extends MeleeAttackGoal {
                 this.resetAttackCooldown();
                 this.mob.swing(InteractionHand.MAIN_HAND);
                 this.mob.doHurtTarget(pEnemy);
+                StarVampireEntity.StarVampireHunger = StarVampireEntity.StarVampireHunger + 15;
+                StarVampireEntity.StarVampireBloodCounter = StarVampireEntity.StarVampireBloodCounter + 1;
             }
         } else {
             resetAttackCooldown();

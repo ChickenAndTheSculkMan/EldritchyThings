@@ -33,7 +33,7 @@ public class StarVampireRenderer extends MobRenderer<StarVampireEntity, StarVamp
         }
         else {
             //return new ResourceLocation(EldritchyThings.MODID, "textures/entity/star_vampire_texture.png");
-            return new ResourceLocation(EldritchyThings.MODID, "textures/entity/star_vampire_texture5.png");
+            return new ResourceLocation(EldritchyThings.MODID, "textures/entity/star_vampire_texture.png");
         }
     }
 

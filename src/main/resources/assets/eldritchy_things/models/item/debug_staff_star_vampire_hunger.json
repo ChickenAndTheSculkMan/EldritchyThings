@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "eldritchy_things:item/debug_staff_star_vampire_hunger"
+  }
+}

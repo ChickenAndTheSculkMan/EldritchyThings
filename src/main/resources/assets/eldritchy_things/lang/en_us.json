@@ -1,7 +1,12 @@
 {
   "item_group.eldritchy_things.eldritchy_things": "Eldritchy Things",
+
   "entity.eldritchy_things.devoted": "Devoted",
+  "entity.eldritchy_things.star_vampire": "Star Vampire",
+
   "item.eldritchy_things.yellow_dagger": "Yellow Dagger",
+  "item.eldritchy_things.debug_staff_star_vampire_hunger": "Debug Staff (Star Vampire Hunger)",
   "item.eldritchy_things.devoted_spawn_egg": "Devoted Spawn Egg",
+
   "effect.eldritchy_things.madness": "Madness"
 }

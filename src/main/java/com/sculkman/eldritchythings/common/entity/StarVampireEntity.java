@@ -1,6 +1,9 @@
 package com.sculkman.eldritchythings.common.entity;
 
 import com.sculkman.eldritchythings.common.entity.goals.StarVampireAttackGoal;
+import com.sculkman.eldritchythings.common.entity.goals.StarVampireIdleGoal;
+import com.sculkman.eldritchythings.common.entity.goals.StarVampireTargetAnimalGoal;
+import com.sculkman.eldritchythings.common.entity.goals.StarVampireTargetPlayerGoal;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -12,15 +15,13 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.OpenDoorGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.Level;
 
 public class StarVampireEntity extends Monster {
@@ -29,15 +30,17 @@ public class StarVampireEntity extends Monster {
     }
     public static int StarVampireMenaceGauge = 0;
     public static int StarVampireBloodCounter = 0;
-    public int StarVampireBloodHunger = 100;
-    public static enum StarVampireBehaviour {
-        IDLE,
-        FLEEING,
-        TOYING,
-        HUNTING_ANIMAL,
-        HUNTING_PLAYER,
-        ASCENDING
-    }
+    public static int StarVampireHunger = 100;
+
+    /*
+    0 = Idle
+    1 = Hunting Player
+    2 = Hunting Animal
+    3 = Toying
+    While storing these as a *Int* is a death sentence, it will make checking for this way easier.
+     */
+    public static int StarVampireBehaviour = 0;
+
     private static final EntityDataAccessor<Boolean> ATTACKING =
             SynchedEntityData.defineId(StarVampireEntity.class, EntityDataSerializers.BOOLEAN);
     public final AnimationState idle = new AnimationState();
@@ -68,10 +71,12 @@ public class StarVampireEntity extends Monster {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.targetSelector.addGoal(1, new StarVampireAttackGoal(this, 1.0D, true));
-        this.goalSelector.addGoal(4, new RandomStrollGoal(this, 1.0));
+        this.goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this, 1.0));
         this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 3.0F, 1.0F));
         this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0F));
-        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
+        this.goalSelector.addGoal(0, new StarVampireIdleGoal(this));
+        this.targetSelector.addGoal(5, new StarVampireTargetPlayerGoal(this, Player.class, false));
+        this.targetSelector.addGoal(6, new StarVampireTargetAnimalGoal(this, Animal.class, false));
     }
 
     @Override
@@ -111,7 +116,7 @@ public class StarVampireEntity extends Monster {
         return Mob.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 300F)
                 .add(Attributes.FOLLOW_RANGE, 24.0F)
-                .add(Attributes.MOVEMENT_SPEED, 0.15F)
+                .add(Attributes.MOVEMENT_SPEED, 0.35F)
                 .add(Attributes.ATTACK_DAMAGE, 16.0F)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.0F)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0F)
