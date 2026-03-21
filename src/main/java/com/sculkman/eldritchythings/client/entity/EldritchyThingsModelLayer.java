@@ -10,4 +10,6 @@ public class EldritchyThingsModelLayer {
             new ResourceLocation(EldritchyThings.MODID, "devoted_layer"), "devoted");
     public static final ModelLayerLocation STAR_VAMPIRE = new ModelLayerLocation(
             new ResourceLocation("star_vampire_layer"), "star_vampire");
+    public static final ModelLayerLocation RASCAL = new ModelLayerLocation(
+            new ResourceLocation("rascal_layer"), "rascal_layer");
 }

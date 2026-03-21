@@ -19,7 +19,7 @@ public class StarVampireRenderer extends MobRenderer<StarVampireEntity, StarVamp
 
     @Override
     public ResourceLocation getTextureLocation(StarVampireEntity starVampireEntity) {
-        if (StarVampireEntity.StarVampireBloodCounter >=2 && StarVampireEntity.StarVampireBloodCounter <=7) {
+        /*if (StarVampireEntity.StarVampireBloodCounter >=2 && StarVampireEntity.StarVampireBloodCounter <=7) {
             return new ResourceLocation(EldritchyThings.MODID, "textures/entity/star_vampire_texture2.png");
         }
         if (StarVampireEntity.StarVampireBloodCounter >=8 && StarVampireEntity.StarVampireBloodCounter <=12) {
@@ -30,11 +30,11 @@ public class StarVampireRenderer extends MobRenderer<StarVampireEntity, StarVamp
         }
         if (StarVampireEntity.StarVampireBloodCounter >=25) {
             return new ResourceLocation(EldritchyThings.MODID, "textures/entity/star_vampire_texture5.png");
-        }
-        else {
+        }*/
+        //else {
             //return new ResourceLocation(EldritchyThings.MODID, "textures/entity/star_vampire_texture.png");
-            return new ResourceLocation(EldritchyThings.MODID, "textures/entity/star_vampire_texture.png");
-        }
+            return new ResourceLocation(EldritchyThings.MODID, "textures/entity/star_vampire_texture5.png");
+        //}
     }
 
     @Override

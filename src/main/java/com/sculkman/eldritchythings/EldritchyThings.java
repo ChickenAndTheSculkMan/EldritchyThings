@@ -2,6 +2,7 @@ package com.sculkman.eldritchythings;
 
 import com.mojang.logging.LogUtils;
 import com.sculkman.eldritchythings.client.entity.DevotedRenderer;
+import com.sculkman.eldritchythings.client.entity.RascalRenderer;
 import com.sculkman.eldritchythings.client.entity.StarVampireRenderer;
 import com.sculkman.eldritchythings.common.blocks.EldritchyThingsBlocks;
 import com.sculkman.eldritchythings.common.effect.EldritchyThingsEffects;
@@ -103,6 +104,7 @@ public class EldritchyThings
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(EldritchyThingsEntities.DEVOTED.get(), DevotedRenderer::new);
             EntityRenderers.register(EldritchyThingsEntities.STAR_VAMPIRE.get(), StarVampireRenderer::new);
+            EntityRenderers.register(EldritchyThingsEntities.RASCAL.get(), RascalRenderer::new);
         }
     }
 

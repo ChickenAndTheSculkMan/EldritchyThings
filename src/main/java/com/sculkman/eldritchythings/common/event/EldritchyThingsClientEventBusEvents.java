@@ -2,6 +2,7 @@ package com.sculkman.eldritchythings.common.event;
 
 import com.sculkman.eldritchythings.EldritchyThings;
 import com.sculkman.eldritchythings.client.entity.EldritchyThingsModelLayer;
+import com.sculkman.eldritchythings.client.entity.RascalModel;
 import com.sculkman.eldritchythings.client.entity.StarVampireModel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -13,5 +14,6 @@ public class EldritchyThingsClientEventBusEvents {
     @SubscribeEvent
     public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(EldritchyThingsModelLayer.STAR_VAMPIRE, StarVampireModel::createBodyLayer);
+        event.registerLayerDefinition(EldritchyThingsModelLayer.RASCAL, RascalModel::createBodyLayer);
     }
 }
