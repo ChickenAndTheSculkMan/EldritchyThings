@@ -5,6 +5,7 @@ import com.sculkman.eldritchythings.EldritchyThings;
 import com.sculkman.eldritchythings.common.entity.RascalEntity;
 import com.sculkman.eldritchythings.common.entity.StarVampireEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -17,6 +18,11 @@ public class RascalRenderer extends MobRenderer<RascalEntity, RascalModel<Rascal
     @Override
     public ResourceLocation getTextureLocation(RascalEntity rascalEntity) {
             return new ResourceLocation(EldritchyThings.MODID, "textures/entity/rascal.png");
+    }
+
+    @Override
+    public boolean shouldRender(RascalEntity pLivingEntity, Frustum pCamera, double pCamX, double pCamY, double pCamZ) {
+        return !pLivingEntity.isInvisbleRascal();
     }
 
     @Override

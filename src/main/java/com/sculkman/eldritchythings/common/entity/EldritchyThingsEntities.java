@@ -22,4 +22,5 @@ public class EldritchyThingsEntities {
     public static final RegistryObject<EntityType<RascalEntity>> RASCAL =
             ENTITIES.register("rascal", () -> EntityType.Builder.of(RascalEntity::new, MobCategory.MONSTER)
                     .sized(0.6f, 1.8f).build("rascal"));
+
 }

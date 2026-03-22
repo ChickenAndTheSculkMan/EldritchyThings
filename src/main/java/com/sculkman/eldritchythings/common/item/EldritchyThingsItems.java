@@ -23,4 +23,6 @@ public class EldritchyThingsItems {
     //Spawn Eggs
     public static final RegistryObject<Item> DEVOTED_SPAWN_EGG = ITEMS.register("devoted_spawn_egg", () ->
             new ForgeSpawnEggItem(EldritchyThingsEntities.DEVOTED, 15582019, 1973274, new Item.Properties()));
+    public static final RegistryObject<Item> RASCAL_SPAWN_EGG = ITEMS.register("rascal_spawn_egg", () ->
+            new ForgeSpawnEggItem(EldritchyThingsEntities.RASCAL, 20121, 22836, new Item.Properties()));
 }

@@ -3,10 +3,13 @@
 
   "entity.eldritchy_things.devoted": "Devoted",
   "entity.eldritchy_things.star_vampire": "Star Vampire",
+  "entity.eldritchy_things.rascal": "Rascal",
 
   "item.eldritchy_things.yellow_dagger": "Yellow Dagger",
   "item.eldritchy_things.debug_staff_star_vampire_hunger": "Debug Staff (Star Vampire Hunger)",
+
   "item.eldritchy_things.devoted_spawn_egg": "Devoted Spawn Egg",
+  "item.eldritchy_things.rascal_spawn_egg": "Rascal Spawn Egg",
 
   "effect.eldritchy_things.madness": "Madness"
 }

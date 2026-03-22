@@ -81,7 +81,7 @@ public class EldritchyThings
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-        LOGGER.info("Cooking up some Starry Vampires in the oven! (Eldritchy Things (Common) loaded)");
+        LOGGER.info("Cooking up some Starry Vampires in the oven!");
     }
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
@@ -89,6 +89,8 @@ public class EldritchyThings
             event.accept(EldritchyThingsItems.YELLOW_DAGGER);
         if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS)
             event.accept(EldritchyThingsItems.DEVOTED_SPAWN_EGG);
+        if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS)
+            event.accept(EldritchyThingsItems.RASCAL_SPAWN_EGG);
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

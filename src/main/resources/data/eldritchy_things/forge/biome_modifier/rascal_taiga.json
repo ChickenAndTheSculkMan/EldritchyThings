@@ -1,0 +1,11 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#minecraft:has_structure/village_taiga",
+  "spawners":
+  {
+    "type": "eldritchy_things:rascal",
+    "weight": 5,
+    "minCount": 1,
+    "maxCount": 3
+  }
+}
