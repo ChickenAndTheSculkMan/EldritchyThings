@@ -79,9 +79,10 @@ public class RascalModel<T extends Entity> extends HierarchicalModel<T> {
 		this.root2.getAllParts().forEach(ModelPart::resetPose);
 		this.applyHeadRotation(netHeadYaw, headPitch, ageInTicks);
 
-		this.animateWalk(RascalAnim.walk, limbSwing, limbSwingAmount, 1f, 2.5f);
-		this.animate(((RascalEntity) entity).idle, RascalAnim.idle, ageInTicks, 1f);
-		this.animate(((RascalEntity) entity).attack, RascalAnim.attack, ageInTicks, 1f);
+		this.animateWalk(RascalAnim.walk, limbSwing, limbSwingAmount, 2.5f, 1.0f);
+		this.animate(((RascalEntity) entity).idle, RascalAnim.idle2, ageInTicks, 1f);
+		this.animate(((RascalEntity) entity).attack, RascalAnim.attack, ageInTicks, 2f);
+		this.animate(((RascalEntity) entity).crashing_out, RascalAnim.crashing_out, ageInTicks, 1f);
 	}
 	//Thank you kauepenjoe
 	private void applyHeadRotation(float pNetHeadYaw, float pHeadPitch, float pAgeInTicks) {

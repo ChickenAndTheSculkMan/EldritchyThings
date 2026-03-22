@@ -1,9 +1,6 @@
 package com.sculkman.eldritchythings.common.entity;
 
-import com.sculkman.eldritchythings.common.entity.goals.StarVampireAttackGoal;
-import com.sculkman.eldritchythings.common.entity.goals.StarVampireIdleGoal;
-import com.sculkman.eldritchythings.common.entity.goals.StarVampireTargetAnimalGoal;
-import com.sculkman.eldritchythings.common.entity.goals.StarVampireTargetPlayerGoal;
+import com.sculkman.eldritchythings.common.entity.goals.*;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -17,6 +14,7 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.OpenDoorGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
@@ -29,10 +27,13 @@ public class RascalEntity extends Monster {
 
     private static final EntityDataAccessor<Boolean> ATTACKING =
             SynchedEntityData.defineId(RascalEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> CRASHING_OUT =
+            SynchedEntityData.defineId(RascalEntity.class, EntityDataSerializers.BOOLEAN);
     public final AnimationState idle = new AnimationState();
     private int idleAnimationTimeout = 0;
     public final AnimationState attack = new AnimationState();
     public int attackAnimationTimeout = 0;
+    public final AnimationState crashing_out = new AnimationState();
 
     private void setupAnimationStates() {
         if (this.idleAnimationTimeout <=0) {
@@ -43,7 +44,7 @@ public class RascalEntity extends Monster {
         }
 
         if (this.isAttacking() && attackAnimationTimeout <=0) {
-            attackAnimationTimeout = 15;
+            attackAnimationTimeout = 7;
             attack.start(this.tickCount);
         } else {
             --this.attackAnimationTimeout;
@@ -51,15 +52,22 @@ public class RascalEntity extends Monster {
         if (!this.isAttacking()) {
             attack.stop();
         }
+        if (isCrashingOut()) {
+            crashing_out.start(this.tickCount);
+        } else {
+            crashing_out.stop();
+        }
     }
 
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(3, new RascalMeleeAttackGoal(this, 1.5, true));
         this.goalSelector.addGoal(2, new OpenDoorGoal(this, true));
-        this.goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this, 1.0));
+        this.goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this, 0.8));
         this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 3.0F, 1.0F));
         this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0F));
+        this.targetSelector.addGoal(2, new NearestAttackbleTargetRascalGoal(this, Player.class, true));
     }
 
     @Override
@@ -78,10 +86,19 @@ public class RascalEntity extends Monster {
         return this.entityData.get(ATTACKING);
     }
 
+    public void setCrashingOut(boolean crashingOut) {
+        this.entityData.set(CRASHING_OUT, crashingOut);
+    }
+
+    public boolean isCrashingOut() {
+        return this.entityData.get(CRASHING_OUT);
+    }
+
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(ATTACKING, false);
+        this.entityData.define(CRASHING_OUT, false);
     }
 
     protected void updateWalkAnimation(float pPartialTick) {
@@ -98,11 +115,11 @@ public class RascalEntity extends Monster {
     public static AttributeSupplier createRascalAttributes() {
         return Mob.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 15F)
-                .add(Attributes.FOLLOW_RANGE, 32.0F)
-                .add(Attributes.MOVEMENT_SPEED, 0.15F)
+                .add(Attributes.FOLLOW_RANGE, 12.0F)
+                .add(Attributes.MOVEMENT_SPEED, 0.25F)
                 .add(Attributes.ATTACK_DAMAGE, 7.0F)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.0F)
-                .add(Attributes.KNOCKBACK_RESISTANCE, 0.0F)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 0.1F)
                 .add(Attributes.ARMOR, 0.0F)
                 .add(Attributes.ARMOR_TOUGHNESS, 0.0F)
                 .build();
